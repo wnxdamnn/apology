@@ -5,7 +5,7 @@ from aiogram.filters import Command
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 # Берём токен из переменных Railway
-TOKEN = os.getenv("8720622769:AAEhAY6D0Nr5qsQTZW78biilkNe_aD1fgnU")
+TOKEN = os.getenv("8720622769:AAGx5-v_9GC7qyCkRea_J8Z8w4avkDEWN8g")
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
