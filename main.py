@@ -1,15 +1,15 @@
 import asyncio
+import os
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-# === ВСТАВЬ СЮДА СВОЙ ТОКЕН ===
-TOKEN = "8720622769:AAEhAY6D0Nr5qsQTZW78biilkNe_aD1fgnU"
+# Берём токен из переменных Railway
+TOKEN = os.getenv("8720622769:AAEhAY6D0Nr5qsQTZW78biilkNe_aD1fgnU")
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
-# Кнопка
 keyboard = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="любимой жене")]
@@ -17,7 +17,6 @@ keyboard = ReplyKeyboardMarkup(
     resize_keyboard=True
 )
 
-# ASCII
 art1 = """
     ✿    ✿
   ✿  ♥  ✿
@@ -44,19 +43,14 @@ art3 = """
 
 @dp.message(Command("start"))
 async def start(message: types.Message):
-    await message.answer(
-        "‎",  # пустое сообщение, чтобы просто показать кнопку
-        reply_markup=keyboard
-    )
+    await message.answer("❤️", reply_markup=keyboard)
 
 @dp.message(F.text == "любимой жене")
 async def for_wife(message: types.Message):
-    # ASCII
     await message.answer(f"<pre>{art1}</pre>", parse_mode="HTML")
     await message.answer(f"<pre>{art2}</pre>", parse_mode="HTML")
     await message.answer(f"<pre>{art3}</pre>", parse_mode="HTML")
 
-    # Картинки с букетами
     photos = [
         "https://images.unsplash.com/photo-1490750967868-88aa4486c936?w=800",
         "https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?w=800",
@@ -65,9 +59,11 @@ async def for_wife(message: types.Message):
     ]
 
     for photo in photos:
-        await message.answer_photo(photo)
+        try:
+            await message.answer_photo(photo)
+        except:
+            pass
 
-    # Финальная надпись
     await message.answer("я тебя люблю, прости")
 
 async def main():
